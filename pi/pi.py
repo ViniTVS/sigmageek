@@ -47,11 +47,10 @@ def main():
             if is_prime(val):
                 print(val)
                 return
-    logging.debug("Start_num: " + str(start_num))
-    logging.debug("Digits: " + pi_string)
-
     # for every char in the pi_string
     start_num = 0
+    logging.debug("Start_num: " + str(start_num))
+    logging.debug("Digits: " + pi_string)
     while True:
         # get new digits
         start_num += 1000
@@ -66,6 +65,7 @@ def main():
             if (palindrome(array)):
                 val = arrayToNum(array)
                 if is_prime(val):
+                    logging.debug("Value: " + str(val))
                     print(val)
                     return
             # if it's not what we want, remove the first value from the array and insert another
