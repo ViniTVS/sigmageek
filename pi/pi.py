@@ -27,18 +27,16 @@ def arrayToNum(array):
     return int(string)
 
 def main():
+    # some logging fro debugg
     logging.basicConfig(filename='pi.log', encoding='utf-8', level=logging.DEBUG)
     logging.debug('This message should go to the log file')
-
-    # noone said to find pi, so I can just use what other people made :)
-    # pi value with 1 million digits, from http://www.eveandersson.com/pi/digits/1000000
-    
+    # get pi digits using Google's pi API
     url = "https://api.pi.delivery/v1/pi?start=0&numberOfDigits=1000"
     response = requests.get(url)
     pi_string = response.json()['content']
     # array to help find palindromes
     array = []
-    # just populate the array with the first 9 digits
+    # just populate the array with the first 21 digits
     for i in range(21):
         array.append(pi_string[i])
     # for every char in the pi_string
@@ -56,7 +54,7 @@ def main():
             # if it's not what we want, remove the first value from the array and insert another
             array.pop(0)
             array.append(pi_string[i])
-        
+        # get new digits
         start_num += 1000
         url = "https://api.pi.delivery/v1/pi?start="+ str(start_num) + "&numberOfDigits=1000"
         response = requests.get(url)
