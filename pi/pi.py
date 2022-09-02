@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 import math
-import sys
 import requests
-
+import logging
 # check if number is prime (https://geekflare.com/prime-number-in-python/)
 def is_prime(n):
     for i in range(2,int(math.sqrt(n))+1):
@@ -28,6 +27,9 @@ def arrayToNum(array):
     return int(string)
 
 def main():
+    logging.basicConfig(filename='pi.log', encoding='utf-8', level=logging.DEBUG)
+    logging.debug('This message should go to the log file')
+
     # noone said to find pi, so I can just use what other people made :)
     # pi value with 1 million digits, from http://www.eveandersson.com/pi/digits/1000000
     
@@ -41,17 +43,16 @@ def main():
         array.append(pi_string[i])
     # for every char in the pi_string
     start_num = 0
-    count = 1
     while True:
-        print(count)
-        count += 1
-        # url = 
+        logging.debug("Start_num: " + str(start_num))
+        logging.debug("Digits: " + pi_string)
+
         for i in range(len(pi_string)):
             if (palindrome(array)):
                 val = arrayToNum(array)
                 if is_prime(val):
                     print(val)
-                    break
+                    return
             # if it's not what we want, remove the first value from the array and insert another
             array.pop(0)
             array.append(pi_string[i])
