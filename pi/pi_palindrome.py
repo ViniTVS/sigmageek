@@ -23,7 +23,7 @@ def palindrome(array):
 
 def getPiDigits(start, digits = 1000):
     url = "https://api.pi.delivery/v1/pi?start="+ str(start) + "&numberOfDigits=" + str(digits)
-    response = requests.get(url, timeout=10)
+    response = requests.get(url, timeout=1000)
     
     pi_string = ""
     try:
@@ -46,37 +46,31 @@ def arrayToNum(array):
     return int(string)
 
 def main():
+    file = open("debug.txt", "a")
     # get pi digits using Google's pi API
     start_num = 0
-    pi_string = getPiDigits(start_num)
+    if (len(sys.argv) > 1):
+        start_num = sys.argv[1]
     # array to help find palindromes
     array = []
-    # just populate the array with the first 21 digits
+    # just populate the array with 21 digits
     for i in range(21):
-        array.append(pi_string[i])
-    #check if the 1000 first digits are palindrome
-    for i in range(21, len(pi_string)):
-        if (palindrome(array)):
-            if is_prime(arrayToNum(array)):
-                print(val)
-                return
-        # if it's not what we want, remove the first value from the array and insert another
-        array.pop(0)
-        array.append(pi_string[i])
-
-    # for every char in the pi_string
+        array.append(i)
+        
     while True:
         # get new digits
-        start_num += 1000
+        file.write(str(start_num) + "\n")
         pi_string = getPiDigits(start_num)
+        start_num += 1000
 
         for i in range(len(pi_string)):
             if (palindrome(array)):
                 val = arrayToNum(array)
                 if is_prime(val):
-                    logging.debug("Value: " + str(val))
+                    file.write("val: " + str(val) + "\n")
+                    file.write("at: " + str(start_num + i) + "\n")
                     print(val)
-                    return
+                    sys.exit(0)
             # if it's not what we want, remove the first value from the array and insert another
             array.pop(0)
             array.append(pi_string[i])
